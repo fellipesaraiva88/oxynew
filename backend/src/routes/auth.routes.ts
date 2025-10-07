@@ -30,8 +30,7 @@ router.post('/register', async (req, res): Promise<void> => {
     // Create organization
     const orgData: TablesInsert<'organizations'> = {
       name: organizationName,
-      email,
-      settings: {}
+      email
     };
     const { data: org, error: orgError } = await supabaseAdmin
       .from('organizations')
