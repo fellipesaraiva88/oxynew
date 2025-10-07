@@ -139,25 +139,18 @@ export class EmojiService {
    * Obtém emoji baseado no tipo de patient
    */
   getPetEmoji(gender_identity: string): string {
-    const normalizedSpecies = gender_identity.toLowerCase();
+    // Para sistema médico, retorna emojis de pessoas
+    const normalizedGender = gender_identity?.toLowerCase() || '';
 
-    if (normalizedSpecies.includes('male'|'female'|'other'|'prefer_not_to_say') || normalizedSpecies.includes('cachorro')) {
-      return this.getRandomEmoji(PET_EMOJIS.dog);
+    if (normalizedGender.includes('male') && !normalizedGender.includes('female')) {
+      return '👨';
     }
 
-    if (normalizedSpecies.includes('male'|'female'|'other'|'prefer_not_to_say') || normalizedSpecies.includes('gato')) {
-      return this.getRandomEmoji(PET_EMOJIS.cat);
+    if (normalizedGender.includes('female')) {
+      return '👩';
     }
 
-    if (normalizedSpecies.includes('male'|'female'|'other'|'prefer_not_to_say') || normalizedSpecies.includes('pássaro') || normalizedSpecies.includes('passaro')) {
-      return this.getRandomEmoji(PET_EMOJIS.bird);
-    }
-
-    if (normalizedSpecies.includes('male'|'female'|'other'|'prefer_not_to_say') || normalizedSpecies.includes('coelho')) {
-      return this.getRandomEmoji(PET_EMOJIS.rabbit);
-    }
-
-    return this.getRandomEmoji(PET_EMOJIS.other);
+    return '👤'; // Neutro para outros casos
   }
 
   /**

@@ -353,8 +353,8 @@ Diretrizes:
             nome: { type: 'string', description: 'Nome do patient' },
             especie: {
               type: 'string',
-              enum: ['male'|'female'|'other'|'prefer_not_to_say', 'male'|'female'|'other'|'prefer_not_to_say', 'male'|'female'|'other'|'prefer_not_to_say', 'male'|'female'|'other'|'prefer_not_to_say', 'male'|'female'|'other'|'prefer_not_to_say'],
-              description: 'Espécie do patient'
+              enum: ['male', 'female', 'other', 'prefer_not_to_say'],
+              description: 'Gênero do paciente'
             },
             raca: { type: 'string', description: 'Raça do patient (opcional)' },
             idade_anos: { type: 'number', description: 'Idade em anos (opcional)' },
@@ -1013,7 +1013,7 @@ Diretrizes:
         planType: args.planType,
         durationWeeks: Math.ceil(args.totalSessions / 4),
         methodology: args.planType === 'basico' ? 'positivo' : 'misto',
-        locationType: 'casa_responsável'
+        locationType: 'casa_tutor'
       });
 
       return {
@@ -1098,7 +1098,7 @@ Diretrizes:
         patientId: args.patientId,
         contactId,
         healthAssessment: {
-          imunizações: true,
+          vacinas: true,
           vermifugo: true,
           exames: [],
           restricoes_alimentares: args.specialRequests ? [args.specialRequests] : []

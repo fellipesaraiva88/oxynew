@@ -1,11 +1,11 @@
 import { Router, Response } from 'express';
-import { PetsService } from '../services/patients/patients.service.js';
+import { PatientsService } from '../services/patients/patients.service.js';
 import { logger } from '../config/logger.js';
 import { TenantRequest, tenantMiddleware, validateResource } from '../middleware/tenant.middleware.js';
 import { standardLimiter } from '../middleware/rate-limiter.js';
 
 const router = Router();
-const petsService = new PetsService();
+const patientsService = new PatientsService();
 
 // Apply tenant middleware and rate limiting to all routes
 router.use(tenantMiddleware);
