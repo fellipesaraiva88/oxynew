@@ -436,7 +436,7 @@ io.use(async (socket, next) => {
     const { data: userData, error: userError } = await supabaseAdmin
       .from('users')
       .select('id, organization_id')
-      .eq('auth_user_id', user.id)
+      .eq('id', user.id)
       .maybeSingle();
 
     if (!userData || userError) {

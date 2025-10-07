@@ -47,11 +47,11 @@ router.post('/register', async (req, res): Promise<void> => {
 
     // Create user record
     const userData: TablesInsert<'users'> = {
+      id: authUser.user.id,
       organization_id: org.id,
       email,
       full_name: fullName,
-      role: 'guardian',
-      auth_user_id: authUser.user.id
+      role: 'guardian'
     };
     const { data: user, error: userError } = await supabaseAdmin
       .from('users')
@@ -133,13 +133,13 @@ router.get('/me', async (req, res): Promise<void> => {
       return;
     }
 
-    logger.info({ auth_user_id: user.id }, 'Fetching profile for user');
+    logger.info({ user_id: user.id }, 'Fetching profile for user');
 
     // Fetch user data
     const { data: userData, error: userError } = await supabaseAdmin
       .from('users')
       .select('*')
-      .eq('auth_user_id', user.id)
+      .eq('id', user.id)
       .single();
 
     if (userError || !userData) {

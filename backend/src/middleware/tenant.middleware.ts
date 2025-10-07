@@ -46,7 +46,7 @@ export class TenantMiddleware {
       const { data: userData, error: userError } = await supabaseAdmin
         .from('users')
         .select('organization_id, role')
-        .eq('auth_user_id', user.id)
+        .eq('id', user.id)
         .maybeSingle();
 
       if (!userData || userError) {
