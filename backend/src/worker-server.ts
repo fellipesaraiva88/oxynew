@@ -57,8 +57,8 @@ let automationWorker: any;
 // SCHEDULED JOBS
 // ==========================================
 import './queue/jobs/whatsapp-health-check.job.js';
-import './queue/jobs/oxy_assistant-daily-summary.job.js';
-import './queue/jobs/oxy_assistant-opportunities.job.js';
+import './queue/jobs/oxy-assistant-daily-summary.job.js';
+import './queue/jobs/oxy-assistant-opportunities.job.js';
 logger.info('📅 Scheduled jobs loaded');
 
 // ==========================================
