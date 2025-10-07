@@ -51,7 +51,7 @@ router.post('/register', async (req, res): Promise<void> => {
       organization_id: org.id,
       email,
       full_name: fullName,
-      role: 'guardian'
+      role: 'owner'
     };
     const { data: user, error: userError } = await supabaseAdmin
       .from('users')
