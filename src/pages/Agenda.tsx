@@ -18,7 +18,7 @@ import { bookingsService } from "@/services/bookings.service";
 import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 import { CalendarView } from "@/components/CalendarView";
-import { BookingFormModal } from "@/components/appointments/BookingFormModal";
+import { BookingFormModal } from "@/components/bookings/BookingFormModal";
 
 export default function Agenda() {
   const { toast } = useToast();

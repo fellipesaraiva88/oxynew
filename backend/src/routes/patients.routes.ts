@@ -15,7 +15,7 @@ router.use(standardLimiter);
 router.get('/contact/:contactId', validateResource('contactId', 'contacts'), async (req: TenantRequest, res: Response): Promise<void> => {
   try {
     const { contactId } = req.params;
-    const patients = await petsService.listByContact(contactId);
+    const patients = await patientsService.listByContact(contactId);
 
     res.json({ patients });
   } catch (error: any) {
@@ -30,7 +30,7 @@ router.get('/organization', async (req: TenantRequest, res: Response): Promise<v
     const organizationId = req.organizationId!;
     const { search, gender_identity } = req.query;
 
-    const patients = await petsService.listByOrganization(organizationId, {
+    const patients = await patientsService.listByOrganization(organizationId, {
       searchQuery: search as string,
       gender_identity: gender_identity as any
     });
@@ -46,7 +46,7 @@ router.get('/organization', async (req: TenantRequest, res: Response): Promise<v
 router.get('/:id', validateResource('id', 'patients'), async (req: TenantRequest, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
-    const patient = await petsService.findById(id);
+    const patient = await patientsService.findById(id);
 
     if (!patient) {
       res.status(404).json({ error: 'Patient not found' });
@@ -66,7 +66,7 @@ router.post('/', async (req: TenantRequest, res: Response): Promise<void> => {
     const organizationId = req.organizationId!;
     const petData = { ...req.body, organization_id: organizationId };
 
-    const patient = await petsService.create(petData);
+    const patient = await patientsService.create(petData);
     res.status(201).json({ patient });
   } catch (error: any) {
     logger.error('Create patient error', error);
@@ -78,7 +78,7 @@ router.post('/', async (req: TenantRequest, res: Response): Promise<void> => {
 router.patch('/:id', validateResource('id', 'patients'), async (req: TenantRequest, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
-    const patient = await petsService.update(id, req.body);
+    const patient = await patientsService.update(id, req.body);
 
     res.json({ patient });
   } catch (error: any) {
