@@ -1,5 +1,5 @@
 import { Router, Response } from 'express';
-import { BookingsService } from '../services/appointments/appointments.service.js';
+import { BookingsService } from '../services/bookings/bookings.service.js';
 import { logger } from '../config/logger.js';
 import { readLimiter, criticalLimiter } from '../middleware/rate-limiter.js';
 import { TenantRequest, tenantMiddleware, validateResource } from '../middleware/tenant.middleware.js';

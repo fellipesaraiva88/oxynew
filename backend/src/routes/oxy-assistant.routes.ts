@@ -1,9 +1,9 @@
 import { Router, type Response } from 'express';
 import { tenantMiddleware, TenantRequest } from '../middleware/tenant.middleware.js';
-import { auroraAuthMiddleware } from '../middleware/oxy_assistant-auth.middleware.js';
-import { auroraService } from '../services/oxy_assistant/oxy_assistant.service.js';
-import { auroraProactiveService, ProactiveMessageType } from '../services/oxy_assistant/oxy_assistant-proactive.service.js';
-import { auroraWelcomeService } from '../services/oxy_assistant/oxy_assistant-welcome.service.js';
+import { auroraAuthMiddleware } from '../middleware/oxy-assistant-auth.middleware.js';
+import { auroraService } from '../services/oxy-assistant/oxy-assistant.service.js';
+import { auroraProactiveService, ProactiveMessageType } from '../services/oxy-assistant/oxy-assistant-proactive.service.js';
+import { auroraWelcomeService } from '../services/oxy-assistant/oxy-assistant-welcome.service.js';
 import { supabaseAdmin } from '../config/supabase.js';
 import { logger } from '../config/logger.js';
 

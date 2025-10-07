@@ -14,7 +14,7 @@ import {
 import { Calendar as CalendarIcon, Clock, DollarSign, CheckCircle, Bot, Loader2 } from "lucide-react";
 import { useBookings } from "@/hooks/useBookings";
 import { useContacts } from "@/hooks/useContacts";
-import { bookingsService } from "@/services/appointments.service";
+import { bookingsService } from "@/services/bookings.service";
 import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 import { CalendarView } from "@/components/CalendarView";

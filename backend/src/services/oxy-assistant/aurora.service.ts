@@ -5,7 +5,7 @@ import type { TablesInsert } from '../../types/database.types.js';
 import { bookingsService } from '../appointments/appointments.service.js';
 import { contactsService } from '../contacts/contacts.service.js';
 import { servicesService } from '../services/services.service.js';
-import { auroraContextBuilderService } from '../context/oxy_assistant-context-builder.service.js';
+import { auroraContextBuilderService } from '../context/oxy-assistant-context-builder.service.js';
 import { knowledgeBaseService } from '../knowledge-base/knowledge-base.service.js';
 import { personalityService } from '../personality/personality.service.js';
 import { responseVariationService } from '../personality/response-variation.service.js';

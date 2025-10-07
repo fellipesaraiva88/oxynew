@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { bookingsService, type Appointment, type CreateBookingData, type UpdateBookingData } from '@/services/appointments.service';
+import { bookingsService, type Appointment, type CreateBookingData, type UpdateBookingData } from '@/services/bookings.service';
 import { useToast } from '@/hooks/use-toast';
 
 interface UseBookingsParams {

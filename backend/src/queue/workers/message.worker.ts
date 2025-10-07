@@ -3,7 +3,7 @@ import { redisConnection } from '../../config/redis.js';
 import { logger } from '../../config/logger.js';
 import { supabaseAdmin } from '../../config/supabase.js';
 import { clientAIService } from '../../services/ai/patient-ai.service.js';
-import { auroraService } from '../../services/oxy_assistant/oxy_assistant.service.js';
+import { auroraService } from '../../services/oxy-assistant/oxy-assistant.service.js';
 import { contactsService } from '../../services/contacts/contacts.service.js';
 import { baileysService } from '../../services/baileys/baileys.service.js';
 import { BipeService } from '../../services/bipe/bipe.service.js';
