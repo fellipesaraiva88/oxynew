@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { apiClient } from '@/lib/api';
+import { useState } from 'react';
+// import { apiClient } from '@/lib/api'; // Not needed when onboarding is disabled
 
 interface OnboardingStatus {
   completed: boolean;
@@ -8,12 +8,15 @@ interface OnboardingStatus {
 }
 
 export function useOnboardingStatus() {
-  const [status, setStatus] = useState<OnboardingStatus>({
-    completed: false,
-    currentStep: 0,
-    loading: true,
+  // ONBOARDING DISABLED: Always return completed=true to skip onboarding flow
+  const [status] = useState<OnboardingStatus>({
+    completed: true,
+    currentStep: 7,
+    loading: false,
   });
 
+  // Original implementation commented out for easy re-enable
+  /*
   useEffect(() => {
     const checkStatus = async () => {
       try {
@@ -25,7 +28,6 @@ export function useOnboardingStatus() {
         });
       } catch (error) {
         console.error('Error checking onboarding status:', error);
-        // If error, assume not completed to be safe
         setStatus({
           completed: false,
           currentStep: 0,
@@ -36,6 +38,7 @@ export function useOnboardingStatus() {
 
     checkStatus();
   }, []);
+  */
 
   return status;
 }
