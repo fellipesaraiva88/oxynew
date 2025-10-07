@@ -1,0 +1,11 @@
+<svg width="1024" height="1024" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1024" height="1024" fill="#8B5CF6" rx="204.8"/>
+  <text
+    x="50%"
+    y="50%"
+    font-size="512"
+    text-anchor="middle"
+    dominant-baseline="middle"
+    fill="white"
+  >🏥</text>
+</svg>

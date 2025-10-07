@@ -1,0 +1,63 @@
+{
+  "cli": {
+    "version": ">= 13.2.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "ios": {
+        "simulator": true,
+        "bundleIdentifier": "com.oxy.mobile.dev"
+      },
+      "android": {
+        "buildType": "apk",
+        "gradleCommand": ":app:assembleDebug"
+      },
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://oxy-backend-8xyx.onrender.com",
+        "EXPO_PUBLIC_SUPABASE_URL": "https://cdndnwglcieylfgzbwts.supabase.co"
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "ios": {
+        "simulator": false,
+        "bundleIdentifier": "com.oxy.mobile.preview"
+      },
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://oxy-backend-8xyx.onrender.com",
+        "EXPO_PUBLIC_SUPABASE_URL": "https://cdndnwglcieylfgzbwts.supabase.co"
+      }
+    },
+    "production": {
+      "ios": {
+        "bundleIdentifier": "com.oxy.mobile"
+      },
+      "android": {
+        "buildType": "aab"
+      },
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://oxy-backend-8xyx.onrender.com",
+        "EXPO_PUBLIC_SUPABASE_URL": "https://cdndnwglcieylfgzbwts.supabase.co"
+      }
+    }
+  },
+  "submit": {
+    "production": {
+      "ios": {
+        "appleId": "seu-apple-id@example.com",
+        "ascAppId": "123456789",
+        "appleTeamId": "TEAM123456"
+      },
+      "android": {
+        "serviceAccountKeyPath": "./service-account-key.json",
+        "track": "internal"
+      }
+    }
+  }
+}

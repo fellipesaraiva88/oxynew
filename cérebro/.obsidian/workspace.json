@@ -1,0 +1,202 @@
+{
+  "main": {
+    "id": "1d2e84c9302c1072",
+    "type": "split",
+    "children": [
+      {
+        "id": "39330e7b72918bc8",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "21361c29e342d54c",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Visualização de diagrama de grafo"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "23899bc3ac7895d8",
+    "type": "split",
+    "children": [
+      {
+        "id": "945fdeca601fb28e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6f48b28ed63aacce",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Explorador de ficheiros"
+            }
+          },
+          {
+            "id": "b6ba36c9a6437132",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Procurar"
+            }
+          },
+          {
+            "id": "b133078e863f4661",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "right": {
+    "id": "b09fa0c39bbaf777",
+    "type": "split",
+    "children": [
+      {
+        "id": "d29110398c1cdedc",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "0f73713c236f5190",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "clientes-sumindo.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks para clientes-sumindo"
+            }
+          },
+          {
+            "id": "a412c9896f55a11e",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "clientes-sumindo.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Links externos de clientes-sumindo"
+            }
+          },
+          {
+            "id": "e5363b9393bd2fbd",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "2c813c9ed269978d",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "clientes-sumindo.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Índice de clientes-sumindo"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Abrir Quick Switcher": false,
+      "graph:Abrir Visualização de diagrama de grafo": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Abrir nota de hoje": false,
+      "templates:Inserir templates": false,
+      "command-palette:Abrir paleta de comando": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "21361c29e342d54c",
+  "lastOpenFiles": [
+    "clientes-sumindo.md",
+    "README.md",
+    "liberdade.md",
+    "novo-normal.md",
+    "loop-crescimento.md",
+    "reducao.md",
+    "tempo-volta.md",
+    "r2400.md",
+    "yorkshires.md",
+    "dados.md",
+    "campaign.md",
+    "function-calling.md",
+    "seis-fontes.md",
+    "booking.md",
+    "resposta-rapida.md",
+    "aurora.md",
+    "dinheiro-vazando.md",
+    "conexao-8dig.md",
+    "whatsapp-ferramenta.md",
+    "paz.md",
+    "oportunidades.md",
+    "lembrete.md",
+    "recuperar.md",
+    "contexto.md",
+    "dual-cerebros.md",
+    "atendente.md",
+    "4_TRANSFORMACIONAL",
+    "3_ARQUITETURAL",
+    "2_ESTRATEGICO",
+    "1_OPERACIONAL"
+  ]
+}

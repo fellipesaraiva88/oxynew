@@ -1,0 +1,96 @@
+# ====================================
+# Oxy - Render Blueprint
+# Complete infrastructure as code
+# ====================================
+
+services:
+  # ====================================
+  # Backend API (Web Service)
+  # ====================================
+  - type: web
+    name: oxy-backend
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    repo: https://github.com/[YOUR_USERNAME]/autonomous-paw-actuator-main
+    branch: main
+    region: oregon
+    plan: starter
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3001
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: CORS_ORIGIN
+        value: https://oxy-frontend-d84c.onrender.com
+      - key: SESSION_PATH
+        value: /app/data/sessions
+    disk:
+      name: baileys-sessions
+      mountPath: /app/data
+      sizeGB: 1
+
+  # ====================================
+  # Background Workers (BullMQ)
+  # ====================================
+  - type: worker
+    name: oxy-workers
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile.worker
+    dockerContext: ./
+    repo: https://github.com/fellipesaraiva88/autonomous-paw-actuator
+    branch: main
+    region: oregon
+    plan: starter
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: REDIS_URL
+        sync: false
+
+  # ====================================
+  # Frontend (Static Site)
+  # ====================================
+  - type: web
+    name: oxy-frontend
+    runtime: static
+    buildCommand: npm run build
+    staticPublishPath: ./dist
+    repo: https://github.com/[YOUR_USERNAME]/autonomous-paw-actuator-main
+    branch: main
+    region: oregon
+    envVars:
+      - key: VITE_API_URL
+        value: https://oxy-backend-8xyx.onrender.com
+      - key: VITE_SUPABASE_URL
+        value: https://cdndnwglcieylfgzbwts.supabase.co
+      - key: VITE_SUPABASE_PROJECT_ID
+        value: cdndnwglcieylfgzbwts
+      - key: VITE_SUPABASE_PUBLISHABLE_KEY
+        sync: false
+      - key: VITE_ENABLE_AURORA
+        value: true
+      - key: VITE_ENABLE_TRAINING
+        value: true
+      - key: VITE_ENABLE_DAYCARE
+        value: true
+      - key: VITE_ENABLE_BIPE
+        value: true

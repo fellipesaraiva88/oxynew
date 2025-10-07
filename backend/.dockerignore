@@ -1,0 +1,57 @@
+# Dependencies
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Build output (will be created in container)
+dist/
+*.tsbuildinfo
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Development files
+*.md
+.vscode/
+.idea/
+.DS_Store
+
+# Test files
+*.test.ts
+*.spec.ts
+__tests__/
+coverage/
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+
+# Documentation
+docs/
+
+# Logs
+logs/
+*.log
+
+# Sessions (will be mounted as volume)
+sessions/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.swp
+*.swo
+*~
+
+# OS files
+Thumbs.db
