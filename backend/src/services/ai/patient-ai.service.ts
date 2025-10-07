@@ -585,7 +585,7 @@ Diretrizes:
 
   private async cadastrarPet(organizationId: string, contactId: string, data: any): Promise<any> {
     try {
-      const patient = await petsService.create({
+      const patient = await patientsService.create({
         organization_id: organizationId,
         contact_id: contactId,
         name: data.nome,

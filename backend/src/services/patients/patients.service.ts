@@ -57,7 +57,7 @@ export interface UpdatePetData {
   is_active?: boolean;
 }
 
-export class PetsService {
+export class PatientsService {
   /**
    * Cria um novo patient
    */
@@ -283,4 +283,4 @@ export class PetsService {
   }
 }
 
-export const petsService = new PetsService();
+export const patientsService = new PatientsService();

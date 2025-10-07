@@ -1,8 +1,8 @@
 import { supabase } from '../../config/supabase.js';
 import { logger } from '../../config/logger.js';
-import { auroraService } from './oxy-assistant.service.js';
+import { auroraService } from './aurora.service.js';
 import { openai, AI_MODELS } from '../../config/openai.js';
-import { bookingsService } from '../appointments/appointments.service.js';
+import { bookingsService } from '../bookings/bookings.service.js';
 import { contactsService } from '../contacts/contacts.service.js';
 
 /**

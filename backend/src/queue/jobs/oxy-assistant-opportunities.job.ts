@@ -2,7 +2,7 @@ import { Queue, Worker, Job } from 'bullmq';
 import { redisConnection } from '../../config/redis.js';
 import { logger } from '../../config/logger.js';
 import { supabaseAdmin } from '../../config/supabase.js';
-import { auroraService } from '../../services/oxy-assistant/oxy-assistant.service.js';
+import { auroraService } from '../../services/oxy-assistant/aurora.service.js';
 import { baileysService } from '../../services/baileys/baileys.service.js';
 
 /**
