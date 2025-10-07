@@ -20,7 +20,7 @@ if (!supabaseUrl || !supabaseServiceKey) {
 }
 
 // Service role client (bypasses RLS, use carefully)
-// With connection pooling for production stability
+// CRITICAL: Service role key should bypass RLS automatically
 export const supabaseAdmin = createClient<Database>(
   supabaseUrl,
   supabaseServiceKey,
@@ -34,11 +34,12 @@ export const supabaseAdmin = createClient<Database>(
     },
     global: {
       headers: {
-        'x-application-name': 'oxy-backend'
+        'x-application-name': 'oxy-backend',
+        'apikey': supabaseServiceKey,
+        'Prefer': 'return=representation'
       }
     }
-    // Note: Connection pooling is handled by Supabase internally
-    // For custom pooling, use @supabase/supabase-js with custom pool config
+    // Note: Service role should bypass RLS by default
   }
 );
 

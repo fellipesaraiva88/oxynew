@@ -27,51 +27,42 @@ router.post('/register', async (req, res): Promise<void> => {
       return;
     }
 
-    // Create organization
-    const orgData: TablesInsert<'organizations'> = {
-      name: organizationName,
-      email
-    };
-    const { data: org, error: orgError } = await supabaseAdmin
-      .from('organizations')
-      .insert(orgData)
-      .select()
-      .single() as { data: Tables<'organizations'> | null; error: any };
+    // Use stored procedure to bypass RLS (SECURITY DEFINER)
+    const { data: registrationResult, error: registrationError } = await supabaseAdmin
+      .rpc('register_organization_and_user' as any, {
+        p_auth_user_id: authUser.user.id,
+        p_email: email,
+        p_full_name: fullName,
+        p_organization_name: organizationName
+      });
 
-    if (orgError || !org) {
-      logger.error('Organization creation failed', orgError);
+    if (registrationError) {
+      logger.error({ err: registrationError }, 'Registration failed');
       await supabaseAdmin.auth.admin.deleteUser(authUser.user.id);
-      res.status(400).json({ error: orgError?.message || 'Failed to create organization' });
+      res.status(400).json({ error: registrationError.message || 'Failed to create organization and user' });
       return;
     }
 
-    // Create user record
-    const userData: TablesInsert<'users'> = {
-      id: authUser.user.id,
-      organization_id: org.id,
-      email,
-      full_name: fullName,
-      role: 'owner'
-    };
-    const { data: user, error: userError } = await supabaseAdmin
+    const result = registrationResult as any;
+    if (!result || !result.organization_id || !result.user_id) {
+      logger.error('Registration failed: invalid result');
+      await supabaseAdmin.auth.admin.deleteUser(authUser.user.id);
+      res.status(400).json({ error: 'Failed to create organization and user' });
+      return;
+    }
+
+    // Fetch created records for response
+    const { data: org } = await supabaseAdmin
+      .from('organizations')
+      .select('*')
+      .eq('id', result.organization_id)
+      .single();
+
+    const { data: user } = await supabaseAdmin
       .from('users')
-      .insert(userData)
-      .select()
-      .single() as { data: Tables<'users'> | null; error: any };
-
-    if (userError || !user) {
-      logger.error('User creation failed', userError);
-      res.status(400).json({ error: userError?.message || 'Failed to create user' });
-      return;
-    }
-
-    // Create organization settings
-    const settingsData: TablesInsert<'organization_settings'> = {
-      organization_id: org.id
-    };
-    await supabaseAdmin
-      .from('organization_settings')
-      .insert(settingsData);
+      .select('*')
+      .eq('id', result.user_id)
+      .single();
 
     res.json({
       success: true,
