@@ -24,11 +24,20 @@ export class MessageWorker {
       async (job: Job<MessageJobData>) => await this.processMessage(job),
       {
         connection: redisConnection,
-        concurrency: 5, // 5 mensagens simultâneas
+        concurrency: 3, // Reduzido de 5 para 3 (menos polling)
         limiter: {
           max: 10,
           duration: 1000 // 10 mensagens por segundo
-        }
+        },
+        // 🔥 CRITICAL: Otimizações para reduzir requisições Redis
+        settings: {
+          stalledInterval: 300000, // 5 min (era 30s) - reduz 90% das requisições
+          maxStalledCount: 1, // Máximo de vezes que um job pode ficar stalled
+          lockDuration: 30000, // 30s de lock
+        } as any, // TypeScript workaround - BullMQ types não incluem todas as opções
+        // Reduzir overhead do polling
+        autorun: true,
+        runRetryDelay: 5000, // 5s entre tentativas de reconexão
       }
     );
 

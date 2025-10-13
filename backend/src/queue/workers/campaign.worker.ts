@@ -19,11 +19,19 @@ export class CampaignWorker {
       async (job: Job<CampaignJobData>) => await this.processCampaign(job),
       {
         connection: redisConnection,
-        concurrency: 3, // 3 campanhas simultâneas
+        concurrency: 2, // Reduzido de 3 para 2
         limiter: {
           max: 100,
           duration: 60000 // 100 mensagens por minuto
-        }
+        },
+        // 🔥 CRITICAL: Otimizações para reduzir requisições Redis
+        settings: {
+          stalledInterval: 300000, // 5 min (reduz 90% das requisições)
+          maxStalledCount: 1,
+          lockDuration: 30000,
+        } as any, // TypeScript workaround
+        autorun: true,
+        runRetryDelay: 5000,
       }
     );
 

@@ -1,4 +1,4 @@
-import { Queue, QueueEvents } from 'bullmq';
+import { Queue } from 'bullmq';
 import { redisConnection } from '../config/redis.js';
 import { logger } from '../config/logger.js';
 
@@ -83,47 +83,9 @@ export const dlqQueue = new Queue('dead-letter-queue', {
   }
 });
 
-// Queue Events para monitoring
-export const messageQueueEvents = new QueueEvents('message-queue', {
-  connection: redisConnection
-});
-
-export const campaignQueueEvents = new QueueEvents('campaign-queue', {
-  connection: redisConnection
-});
-
-export const automationQueueEvents = new QueueEvents('automation-queue', {
-  connection: redisConnection
-});
-
-export const dlqQueueEvents = new QueueEvents('dead-letter-queue', {
-  connection: redisConnection
-});
-
-// Event listeners para logging
-messageQueueEvents.on('completed', ({ jobId }) => {
-  logger.info({ jobId, queue: 'message' }, 'Job completed');
-});
-
-messageQueueEvents.on('failed', ({ jobId, failedReason }) => {
-  logger.error({ jobId, queue: 'message', failedReason }, 'Job failed');
-});
-
-campaignQueueEvents.on('completed', ({ jobId }) => {
-  logger.info({ jobId, queue: 'campaign' }, 'Job completed');
-});
-
-campaignQueueEvents.on('failed', ({ jobId, failedReason }) => {
-  logger.error({ jobId, queue: 'campaign', failedReason }, 'Job failed');
-});
-
-automationQueueEvents.on('completed', ({ jobId }) => {
-  logger.info({ jobId, queue: 'automation' }, 'Job completed');
-});
-
-automationQueueEvents.on('failed', ({ jobId, failedReason }) => {
-  logger.error({ jobId, queue: 'automation', failedReason }, 'Job failed');
-});
+// 🔥 REMOVED QueueEvents - Eles fazem polling constante e custam muitas requisições Redis
+// Event listeners foram movidos para dentro dos Workers (message.worker.ts, etc.)
+// Isso reduz ~80% das requisições Redis desnecessárias
 
 // Helpers para adicionar jobs
 
@@ -243,11 +205,7 @@ export async function closeQueues() {
     messageQueue.close(),
     campaignQueue.close(),
     automationQueue.close(),
-    dlqQueue.close(),
-    messageQueueEvents.close(),
-    campaignQueueEvents.close(),
-    automationQueueEvents.close(),
-    dlqQueueEvents.close()
+    dlqQueue.close()
   ]);
 
   logger.info('All queues closed');

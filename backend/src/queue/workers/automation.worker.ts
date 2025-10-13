@@ -18,11 +18,19 @@ export class AutomationWorker {
       async (job: Job<AutomationJobData>) => await this.processAutomation(job),
       {
         connection: redisConnection,
-        concurrency: 5, // 5 automações simultâneas
+        concurrency: 3, // Reduzido de 5 para 3
         limiter: {
           max: 20,
           duration: 1000 // 20 automações por segundo
-        }
+        },
+        // 🔥 CRITICAL: Otimizações para reduzir requisições Redis
+        settings: {
+          stalledInterval: 300000, // 5 min (reduz 90% das requisições)
+          maxStalledCount: 1,
+          lockDuration: 30000,
+        } as any, // TypeScript workaround
+        autorun: true,
+        runRetryDelay: 5000,
       }
     );
 

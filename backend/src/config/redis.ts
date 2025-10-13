@@ -1,4 +1,5 @@
 import { Redis } from 'ioredis';
+import { redisCircuitBreaker } from './redis-circuit-breaker.js';
 
 const redisUrl = process.env.REDIS_URL;
 
@@ -13,12 +14,19 @@ const redisOptions = {
   tls: {
     rejectUnauthorized: false
   },
-  // Remove family: 6 to allow automatic IPv4/IPv6 resolution
+  // Reduzir tentativas de retry para economizar requisições
   retryStrategy: (times: number) => {
-    const delay = Math.min(times * 50, 2000);
+    // Máximo 3 tentativas (era infinito)
+    if (times > 3) {
+      return null; // Stop retrying
+    }
+    const delay = Math.min(times * 100, 3000);
     return delay;
   },
-  lazyConnect: true // Don't connect immediately
+  lazyConnect: true, // Don't connect immediately
+  // Timeouts mais agressivos
+  connectTimeout: 10000,
+  commandTimeout: 5000,
 };
 
 // Redis connection for BullMQ (compartilhado por todas as filas)
@@ -30,19 +38,46 @@ export const redisCache = new Redis(redisUrl, {
     rejectUnauthorized: false
   },
   retryStrategy: (times: number) => {
-    const delay = Math.min(times * 50, 2000);
+    if (times > 3) return null;
+    const delay = Math.min(times * 100, 3000);
     return delay;
   },
-  lazyConnect: true
+  lazyConnect: true,
+  connectTimeout: 10000,
+  commandTimeout: 5000,
+});
+
+// 🔥 Circuit Breaker Integration - Intercepta erros Redis
+redisConnection.on('error', (err) => {
+  console.error('❌ Redis BullMQ error:', err.message);
+  redisCircuitBreaker.recordFailure(err);
+});
+
+redisCache.on('error', (err) => {
+  console.error('❌ Redis cache error:', err.message);
+  redisCircuitBreaker.recordFailure(err);
+});
+
+// Track successful commands
+redisConnection.on('connect', () => {
+  console.log('✅ Redis BullMQ connected');
+  redisCircuitBreaker.recordSuccess();
+});
+
+redisCache.on('connect', () => {
+  console.log('✅ Redis cache connected');
+  redisCircuitBreaker.recordSuccess();
 });
 
 // Connect with error handling
 redisConnection.connect().catch((err) => {
   console.error('❌ Redis BullMQ connection failed:', err.message);
   console.warn('⚠️  BullMQ will not work without Redis');
+  redisCircuitBreaker.recordFailure(err);
 });
 
 redisCache.connect().catch((err) => {
   console.error('❌ Redis cache connection failed:', err.message);
   console.warn('⚠️  Using memory fallback for caching');
+  redisCircuitBreaker.recordFailure(err);
 });

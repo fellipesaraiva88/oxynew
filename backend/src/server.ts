@@ -234,10 +234,36 @@ app.get('/health', (_req: Request, res: Response): void => {
 app.get('/health/redis', async (_req: Request, res: Response): Promise<void> => {
   try {
     const { redisCache } = await import('./config/redis.js');
-    await redisCache.ping();
-    res.json({ status: 'ok', redis: { connected: true } });
-  } catch (error) {
-    res.status(503).json({ status: 'error', redis: { connected: false, error } });
+    const { redisCircuitBreaker } = await import('./config/redis-circuit-breaker.js');
+
+    const circuitStatus = redisCircuitBreaker.getStatus();
+
+    // Tentar ping apenas se circuit breaker permitir
+    let pingSuccess = false;
+    if (circuitStatus.canExecute) {
+      try {
+        await redisCache.ping();
+        pingSuccess = true;
+      } catch (pingError) {
+        // Falha do ping
+      }
+    }
+
+    res.json({
+      status: pingSuccess ? 'ok' : 'degraded',
+      redis: {
+        connected: pingSuccess,
+        circuitBreaker: circuitStatus
+      }
+    });
+  } catch (error: any) {
+    res.status(503).json({
+      status: 'error',
+      redis: {
+        connected: false,
+        error: error.message
+      }
+    });
   }
 });
 
